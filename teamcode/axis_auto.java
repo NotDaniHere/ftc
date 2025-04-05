@@ -5,8 +5,9 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
@@ -14,15 +15,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 @Config
 public class axis_auto extends LinearOpMode {
     private DcMotor frontLeft, frontRight, backLeft, backRight, armMotor;
+    public Servo clawGrip;
+    public Servo armTilt;
     private IMU imu;
 
     // Configurable parameters (adjust via FTC Dashboard)
     public static double DRIVE_POWER = -0.5;
     public static double ROTATE_POWER = 0.6;
     public static double ARM_POWER = 1.0;
-    public static int X_MS = 1000;
-    public static int Y_MS = 1000;
-    public static int Z_MS = 1000;
+    public static int X_MS = 500;
+    public static int Y_MS = 1500;
+    public static int Z_MS = 100;
     public static double ANGLE_TOLERANCE = 2.0;
 
     @Override
@@ -43,7 +46,8 @@ public class axis_auto extends LinearOpMode {
         frontRight = hardwareMap.get(DcMotor.class, "motor2");
         backLeft = hardwareMap.get(DcMotor.class, "motor3");
         backRight = hardwareMap.get(DcMotor.class, "motor4");
-
+        clawGrip = hardwareMap.get(Servo.class, "clawgrip");
+        armTilt = hardwareMap.get(Servo.class, "armtilt");
         // Reverse right motors for mecanum
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
@@ -61,23 +65,27 @@ public class axis_auto extends LinearOpMode {
 
     private void executeAutonomousSequence() throws InterruptedException {
         // First rotation and movement
-        rotateToAngle(90);
-        driveForward(X_MS);
-        operateArm(ARM_POWER, 5000);    // Raise arm for 5s
-        operateArm(-ARM_POWER, 2000);  // Lower arm for 2s
+        //clawGrip.setPosition(0.4);
+        //rotateToAngle(90);
+        //driveForward(X_MS);
+        operateArm(ARM_POWER, 2000);    // Raise arm for 2s
+        //armTilt.setPosition(0.1);
+        //clawGrip.setPosition(0.1);
+        //operateArm(-ARM_POWER, 2000);  // Lower arm for 2s
+        //armTilt.setPosition(0.6);
 
-        // Second rotation and movement
-        rotateToAngle(180);
-        driveForward(X_MS);
+        //Second rotation and movement
+        //rotateToAngle(180);
+        //driveForward(X_MS);
 
-        // Third rotation and movement
-        rotateToAngle(90);
-        driveForward(Y_MS);
+        /// Third rotation and movement
+        //rotateToAngle(90);
+        //driveForward(Y_MS);
 
         // Final rotation and arm operation
-        rotateToAngle(270);
-        operateArm(ARM_POWER, 5000);   // Raise arm again for 5s
-        driveForward(Z_MS);
+        //rotateToAngle(270);
+        //operateArm(ARM_POWER, 1000);   // Raise arm again for 1s
+        //driveForward(Z_MS);
     }
 
     private void rotateToAngle(double targetAngle) throws InterruptedException {

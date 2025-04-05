@@ -24,10 +24,13 @@ public class axis_auto_sigma extends LinearOpMode {
     public static int Y_MS = 1500;
     public static int Z_MS = 700;
 
+    public static int currentClawState=0; //0-closed 1-open
+
     @Override
     public void runOpMode() throws InterruptedException {
         initializeHardware();
         waitForStart();
+
 
         // Execute movement sequence
         executeMovementSequence();
